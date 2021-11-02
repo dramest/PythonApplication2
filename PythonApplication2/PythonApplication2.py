@@ -15,16 +15,16 @@ def andmed_ekranile(i,p):
     for n in range(N):
         print(i[n],"-",p[n])
 
-def kustutamine(i,p): #Удалить человека и его зарплату(вводим имя)
+def kustutamine(i,p): #Kustuta inimese nimi ja palga
     nimi=input("Sisesta nimi, keda vaja kustutada:")
-    n=i.count(nimi) #кол-во
+    n=i.count(nimi)
     abi_list=[]
     if n>0:
         t=0
         for e in range(len(i)):
             if i[e]==nimi:
                 t+=1
-                abi_list.append(int(e)) #список индексов
+                abi_list.append(int(e)) #indeksite nimekiri
                 print(t,". ",i[e],"-",p[e])
         j=int(input("Järjekordne number:"))
         i.pop(abi_list[j-1])
