@@ -1,154 +1,133 @@
-﻿# Создать два списка Люди и Запрлаты
-# Зaполнить списки значениями, введенными пользователями или случайным образом
-# 
-# 
-r_names_list = ["Vasya", "Gena", "Lesha", "Jevgeniy","Dima","Mihail","Nikita","Lolita","Kolyan","Artem","Gosha"]
-max_rand_salary = 15000
-global inimesed
-inimesed = ["A","B","C","D","E"]
-global palgad
-palgad = [1200,2500,750,395,1200]
-import random
-import string
-l_counter = 0
+﻿from random import *
 
-global input_type
-def show_values(list1,list2): #shows nemes and salary
-    for i in range(len(list1)):
-        print(f"{list1[i]} : {list2[i]}")
-def fill_values(): # Fill lines with manual or random values 
+def sisesta_andmed(i,p):
+    global N
+    N=4
+    for n in range(N):
+        inimene=input("Nimi:")
+        i.append(inimene)
+        palk=randint(100,10000)
+        p.append(palk)
+    return i,p
 
-    if input_type == "R":
-        while True: # amount for random 
-            total_inimesed = input("Specify number of random values: ")
-            if total_inimesed.isdigit() == True:
-                total_inimesed = int(total_inimesed)
-                break
-            
-        for i in range(total_inimesed):
-            inimesed.append(r_names_list[random.randint(0,len(r_names_list)-1)])
-            palgad.append(random.randint(0,max_rand_salary))                                 #
-        
-        show_values(inimesed,palgad)
-        print()
+def andmed_ekranile(i,p):
+    N=len(i)
+    for n in range(N):
+        print(i[n],"-",p[n])
 
-    elif input_type == "M":
-        while True:
-            new_name = input("Enter a name: (or press enter for exit)")
-            if  new_name == "":
-                print("Input process ended by user")
-                break
-            inimesed.append(new_name)
+def kustutamine(i,p): #Удалить человека и его зарплату(вводим имя)
+    nimi=input("Sisesta nimi, keda vaja kustutada:")
+    n=i.count(nimi) #кол-во
+    abi_list=[]
+    if n>0:
+        t=0
+        for e in range(len(i)):
+            if i[e]==nimi:
+                t+=1
+                abi_list.append(int(e)) #список индексов
+                print(t,". ",i[e],"-",p[e])
+        j=int(input("Järjekordne number:"))
+        i.pop(abi_list[j-1])
+        p.pop(abi_list[j-1])
+        andmed_ekranile(i,p)
+    return i,p
 
-            new_salary = input("Enter " + new_name + "`s salary: ")
-            if new_salary.isdigit() == True:
-                palgad.append(int(new_salary))
-            else:
-                palgad.append(0)
-def delete_by_name(): #delete a position with name and salary
-    d_nimi = input("Enter a name to delete: ")
-    n = inimesed.count(d_nimi)
-    index_list = []
-    t = 0
-
-    for e in range(len(inimesed)):
-        if inimesed[e] == d_nimi:
-            t += 1
-            index_list.append(int(e))
-            print(f"{t}.{inimesed[e]} : {palgad[e]}")
-    while True:
-        jar_no = input("Line number to delete: ")
-        if jar_no.isdigit() == True:
-            jar_no = int(jar_no)
-
-            break
-    index_to_delete = index_list[jar_no - 1]
-    print(f"{inimesed[index_to_delete]} with salary {palgad[index_to_delete]} deleted")
-    inimesed.pop(index_to_delete)
-    palgad.pop(index_to_delete)        
-    print()
-def sort_by_salary(sorting_order): 
-    # идем по каждому значению из несортированного списка
-    # добавляем значение в конец сортированного буфера
-    # сравниваем с соседним значением
-    # пока это значение меньше предидущего в листе - меняем эти значения 
-    buf_names_list = []
-    buf_salary_list = []
-    for i in range(len(palgad)-1):
-        #добавляем значение к листу
-        buf_salary_list.append(palgad[i])
-        buf_names_list.append(inimesed[i])
-
-        for j in range(len(buf_salary_list)-1,0,-1):
-            if sorting_order == 1:
-                if buf_salary_list[j] < buf_salary_list[j-1]:
-                    # перемещаем в случае если новое (последнее) значение меньше предидущего
-                    sss = buf_salary_list[j-1]
-                    buf_salary_list[j-1] = buf_salary_list[j]
-                    buf_salary_list[j] = sss
-
-                    nnn = buf_names_list[j-1]
-                    buf_names_list[j-1] = buf_names_list[j]
-                    buf_names_list[j] = nnn
-            elif sorting_order == 2:
-                if buf_salary_list[j] > buf_salary_list[j-1]:
-                    # перемещаем в случае если новое (последнее) значение больше предидущего
-                    sss = buf_salary_list[j-1]
-                    buf_salary_list[j-1] = buf_salary_list[j]
-                    buf_salary_list[j] = sss
-
-                    nnn = buf_names_list[j-1]
-                    buf_names_list[j-1] = buf_names_list[j]
-                    buf_names_list[j] = nnn
-
-
-
-    return buf_names_list, buf_salary_list
-def input_digit(show_string):
-    while True:
-        d = input(show_string)
-        if d.isdigit() == True:
-            return int(d)           
-def minmax_salary(minormax):
-
-    min_v = minmax_salary
-    max_v = 0
-    for i in range(len(palgad)-1):
-        if palgad[i] < min_v: min_v = palgad[i]
-        if palgad[i] > max_v: 
-    if minormax == "MIN":
-        
-    elif minormax == "MAX":
-            
-
-
-
-
-while True:
-    
-    print("Menu:")
-    print("R for random fill")
-    print("M for manual salary input")
-    print("S to show names and salary")
-    print("D to delete by name")
-    print("R for random fill")
-    print("Sort for sorting by salary")
-    print("(press enter for exit)")
-
-    input_type = input("Enter a option : ").upper()
-    if input_type in ["R", "M"]:
-        fill_values()
-    elif input_type == "S":
-        show_values(inimesed,palgad)
-    elif input_type == "D":
-        delete_by_name()
-    elif input_type == "SORT":
-        inimesed, palgad = sort_by_salary(input_digit("Enter 1 for ascending or 2 for descending order:"))
-        show_values(inimesed,palgad)
-    elif input_type == ["MIN","MAX"]:
-        minmax_salary(input_type)
-
+def suurim_palk(i,p):
+    suurim=max(p)
+    #count() for abi_list p.index()->i.index() andmed_ekranile(abi_list)
+def sorteerimine(i,p,v):
+    N=len(p)
+    if v==1:
+        for n in range(0,N):
+            for m in range(n,N):
+                if p[n]<p[m]:
+                    abi=p[n]
+                    p[n]=p[m]
+                    p[m]=abi
+                    abi=i[n]
+                    i[n]=i[m]
+                    i[m]=abi
     else:
-        break #end programm
-    print()
-    input("Press enter to show menu")
+        for n in range(0,N):
+            for m in range(n,N):
+                if  p[n]>p[m]:#< - >
+                    abi=p[n]
+                    p[n]=p[m]
+                    p[m]=abi
+                    abi=i[n]
+                    i[n]=i[m]
+                    i[m]=abi
+    andmed_ekranile(i,p)
+    return i,p
+def sort_nimi_jargi(p,i,v):
+    N=len(p)
+    if v==1:
+        for n in range(0,N):
+            for m in range(n,N):
+                if p[n]<p[m]:
+                    abi=p[n]
+                    p[n]=p[m]
+                    p[m]=abi
+                    abi=i[n]
+                    i[n]=i[m]
+                    i[m]=abi
+    else:
+        for n in range(0,N):
+            for m in range(n,N):
+                if  p[n]>p[m]:#< - >
+                    abi=p[n]
+                    p[n]=p[m]
+                    p[m]=abi
+                    abi=i[n]
+                    i[n]=i[m]
+                    i[m]=abi
+    andmed_ekranile(i,p)
+    return i,p
+def vordsed_palgad(i,p):
+    N=len(p)
+    dublikatid=[x for x in p if p.count(x)>1 ]
+    dublikatid=list(set(dublikatid))
+    print(dublikatid) #[2000,122]
+    for palk in dublikatid: #2000, n=3
+        n=p.count(palk)
+        k=-1 #-----
+        for j in range(n):            
+            k=p.index(palk,k+1)#-----
+            nimi=i[k]
+            print(palk,"saab kätte",nimi)
+def keskmine(i,p):
+    summa=0
+    t=True
+    for palk in p:
+        summa+=palk
+    summa/=len(p)
+    print("Keskmine palk: ",summa)
+    for palk in p:
+        if palk==summa:
+            n=p.index(palk)
+            print("Saab kätte",i[n])
+        else:
+            t=False
+        if t==False:   print("Sellised inimesed puudubad")
+inimesed=["A","B","C"]
+palgad=[3000,2000,1000]
+keskmine(inimesed, palgad) 
+
+while 1:
+    print("a-sisesta\ne-ekaranile\nk-kustuta\nmax-kellel on suurim palk\ns-sort")
+    valik=input()
+    if valik.lower()=="a":
+        inimesed,palgad=sisesta_andmed(inimesed,palgad)
+    elif valik.lower()=="e":
+        andmed_ekranile(inimesed,palgad)
+    elif valik.lower()=="k":
+        inimesed,palgad=kustutamine(inimesed,palgad)
+    elif valik.lower()=="max":
+        suurim_palk(inimesed,palgad)
+    elif valik.lower()=="s":
+        inimesed,palgad=sorteerimine(inimesed,palgad,int(input("1-kahaneb, 2-kasvab ")))
+    elif valik.lower()=="d":
+        vordsed_palgad(inimesed,palgad)
+    else:
+        break
+
